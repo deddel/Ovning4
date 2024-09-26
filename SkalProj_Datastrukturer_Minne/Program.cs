@@ -123,7 +123,9 @@ namespace SkalProj_Datastrukturer_Minne
                         break;
                     case '2':
                         Console.WriteLine($"Count: {theList.Count} \tCapacity: {theList.Capacity}");
+                        Console.ForegroundColor = ConsoleColor.Yellow;
                         Console.WriteLine($"Items in the list: {string.Join(",", theList)}");
+                        Console.ResetColor();
                         Console.WriteLine();
                         //foreach (var item in theList)
                         //{
@@ -169,13 +171,15 @@ namespace SkalProj_Datastrukturer_Minne
                         Console.Write("Input customer to enqueue: ");
                         string inputString = Console.ReadLine();
                         queue.Enqueue(inputString);
-                        //int count = queue.Count;
-                        //Console.WriteLine(queue.Count);
+                        Console.ForegroundColor = ConsoleColor.Yellow;
                         Console.WriteLine($"Customers in the queue: {string.Join(",", queue)}");
+                        Console.ResetColor();
                         break;
                     case '2':
                         queue.Dequeue();
+                        Console.ForegroundColor = ConsoleColor.Yellow;
                         Console.WriteLine($"Customers in the queue: {string.Join(",", queue)}");
+                        Console.ResetColor();
                         break;
                     case '0':
                         examineQueueIsRunning = false;
