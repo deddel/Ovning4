@@ -13,7 +13,7 @@ namespace SkalProj_Datastrukturer_Minne
 
             while (true)
             {
-                Console.WriteLine("Please navigate through the menu by inputting the number \n(1, 2, 3 ,4, 0) of your choice"
+                Console.WriteLine("\nPlease navigate through the menu by inputting the number \n(1, 2, 3 ,4, 0) of your choice"
                     + "\n1. Examine a List"
                     + "\n2. Examine a Queue"
                     + "\n3. Examine a Stack"
@@ -62,8 +62,11 @@ namespace SkalProj_Datastrukturer_Minne
         /// </summary>
         static void ExamineList()
         {
+            //Create a list
+            List<string> theList = new List<string>();
+
             /*
-             * Loop this method untill the user inputs something to exit to main menue.
+             * Loop this method until the user inputs something to exit to main menue.
              * Create a switch statement with cases '+' and '-'
              * '+': Add the rest of the input to the list (The user could write +Adam and "Adam" would be added to the list)
              * '-': Remove the rest of the input from the list (The user could write -Adam and "Adam" would be removed from the list)
@@ -71,13 +74,70 @@ namespace SkalProj_Datastrukturer_Minne
              * As a default case, tell them to use only + or -
              * Below you can see some inspirational code to begin working.
             */
+            
+            bool examineListIsRunning = true;
+            
+            while (examineListIsRunning)
+            {
+                //Submenu - ExamineList
+                Console.WriteLine("\nList Menu. Navigate by inputting (1, 0)"
+                + "\n1. Add or remove from the list"
+                + "\n2. Show list stats"
+                + "\n0. Exit to the Main Menu");
+                string input = Console.ReadLine();
+                char nav = input[0];
+                bool addingItems = true;
 
-            //List<string> theList = new List<string>();
-            //string input = Console.ReadLine();
-            //char nav = input[0];
-            //string value = input.substring(1);
+                switch (nav) 
+                {
+                    case '0':
+                        examineListIsRunning = false;
+                        break;
+                    case '1':
+                        Console.WriteLine("Start your input with + or - followed by the list item to be added or removed");
+                        Console.WriteLine("Start your input with 0 to exit to the ExamineList nenu");
+                        while (addingItems)
+                        {
+                            string inputString = Console.ReadLine();
+                            char addOrRemove = inputString[0];
+                            //string addOrRemoveString = inputString.Substring(1);
+                            if (addOrRemove == '+')
+                            {
+                                theList.Add(inputString.Substring(1));
+                                Console.WriteLine($"List Count: {theList.Count}");
+                                Console.WriteLine($"List Capacity: {theList.Capacity}");
+                            }
+                            else if (addOrRemove == '-')
+                            {
+                                theList.Remove((inputString.Substring(1)));
+                                Console.WriteLine($"theList.Count: {theList.Count} \ttheList.Capacity: {theList.Capacity}");
+                            }
+                            else if (addOrRemove == '0')
+                            {
+                                addingItems = false;
+                            }
+                            else
+                            {
+                                Console.WriteLine("Please enter some valid input (+Item, -Item or 0");
+                            }
+                        }
+                        break;
+                    case '2':
+                        Console.WriteLine($"theList.Count: {theList.Count}");
+                        Console.WriteLine($"theList.Capacity: {theList.Capacity}");
+                        foreach (var item in theList)
+                        {
+                            Console.WriteLine(item);
+                        }
+                        break;
+                    
+                    default:
+                        Console.WriteLine("Please enter some valid input (0, 1, 2)");
+                        break;
+                }
 
-            //switch(nav){...}
+            }
+            
         }
 
         /// <summary>
