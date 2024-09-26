@@ -104,13 +104,12 @@ namespace SkalProj_Datastrukturer_Minne
                             if (addOrRemove == '+')
                             {
                                 theList.Add(inputString.Substring(1));
-                                Console.WriteLine($"List Count: {theList.Count}");
-                                Console.WriteLine($"List Capacity: {theList.Capacity}");
+                                Console.WriteLine($"Count: {theList.Count} \tCapacity: {theList.Capacity}");
                             }
                             else if (addOrRemove == '-')
                             {
                                 theList.Remove((inputString.Substring(1)));
-                                Console.WriteLine($"theList.Count: {theList.Count} \ttheList.Capacity: {theList.Capacity}");
+                                Console.WriteLine($"Count: {theList.Count} \tCapacity: {theList.Capacity}");
                             }
                             else if (addOrRemove == '0')
                             {
@@ -123,12 +122,13 @@ namespace SkalProj_Datastrukturer_Minne
                         }
                         break;
                     case '2':
-                        Console.WriteLine($"theList.Count: {theList.Count}");
-                        Console.WriteLine($"theList.Capacity: {theList.Capacity}");
-                        foreach (var item in theList)
-                        {
-                            Console.WriteLine(item);
-                        }
+                        Console.WriteLine($"Count: {theList.Count} \tCapacity: {theList.Capacity}");
+                        Console.WriteLine($"Items in the list: {string.Join(",", theList)}");
+                        Console.WriteLine();
+                        //foreach (var item in theList)
+                        //{
+                        //    Console.WriteLine(item);
+                        //}
                         break;
                     
                     default:
@@ -150,6 +150,43 @@ namespace SkalProj_Datastrukturer_Minne
              * Create a switch with cases to enqueue items or dequeue items
              * Make sure to look at the queue after Enqueueing and Dequeueing to see how it behaves
             */
+            Queue<string> queue = new Queue<string>();
+            bool examineQueueIsRunning = true;
+
+            while (examineQueueIsRunning) 
+            {
+                //Submenu - ExamineQueue
+
+                Console.WriteLine("\nList Menu. Navigate by inputting (1, 0)"
+                + "\n1. Add customers to the queue"
+                + "\n2. Remove item from the queue"
+                + "\n0. Exit to the Main Menu");
+                string input = Console.ReadLine();
+                char nav = input[0];
+                switch (nav)
+                {
+                    case '1':
+                        Console.Write("Input customer to enqueue: ");
+                        string inputString = Console.ReadLine();
+                        queue.Enqueue(inputString);
+                        //int count = queue.Count;
+                        //Console.WriteLine(queue.Count);
+                        Console.WriteLine($"Customers in the queue: {string.Join(",", queue)}");
+                        break;
+                    case '2':
+                        queue.Dequeue();
+                        Console.WriteLine($"Customers in the queue: {string.Join(",", queue)}");
+                        break;
+                    case '0':
+                        examineQueueIsRunning = false;
+                        break;
+                    default :
+                        Console.WriteLine("Please enter a valid input (0,1,2)");
+                        break;
+
+
+                }
+            }
         }
 
         /// <summary>
