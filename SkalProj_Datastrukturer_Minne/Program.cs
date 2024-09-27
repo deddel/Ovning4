@@ -13,6 +13,7 @@ namespace SkalProj_Datastrukturer_Minne
 
             while (true)
             {
+                Console.WriteLine("Main Menu - data structures and memory");
                 Console.WriteLine("\nPlease navigate through the menu by inputting the number \n(1, 2, 3 ,4, 0) of your choice"
                     + "\n1. Examine a List"
                     + "\n2. Examine a Queue"
@@ -95,11 +96,12 @@ namespace SkalProj_Datastrukturer_Minne
                         break;
                     case '1':
                         Console.WriteLine("Start your input with + or - followed by the list item to be added or removed");
-                        Console.WriteLine("Start your input with 0 to exit to the ExamineList nenu");
+                        Console.WriteLine("Start your input with 0 to exit to the List nenu");
                         while (addingItems)
                         {
                             string inputString = Console.ReadLine();
-                            char addOrRemove = inputString[0];
+                            
+                            char addOrRemove = inputString[0];//TODO: fix crash on empty input
                             //string addOrRemoveString = inputString.Substring(1);
                             if (addOrRemove == '+')
                             {
@@ -115,6 +117,7 @@ namespace SkalProj_Datastrukturer_Minne
                             {
                                 addingItems = false;
                             }
+                            
                             else
                             {
                                 Console.WriteLine("Please enter some valid input (+Item, -Item or 0");
@@ -164,7 +167,7 @@ namespace SkalProj_Datastrukturer_Minne
                 + "\n2. Remove item from the queue"
                 + "\n0. Exit to the Main Menu");
                 string input = Console.ReadLine();
-                char nav = input[0];
+                char nav = input[0]; //TODO fix crash on empty
                 switch (nav)
                 {
                     case '1':
@@ -204,22 +207,23 @@ namespace SkalProj_Datastrukturer_Minne
              * Make sure to look at the stack after pushing and and poping to see how it behaves
             */
             Stack<char> stack = new Stack<char>();
-            string inputString ="";
+            string inputString = "";
             bool examineStackIsRunning = true;
-            while (examineStackIsRunning) 
+            while (examineStackIsRunning)
             {
                 Console.WriteLine("\nStack Menu. Navigate by inputting (0, 1, 2, 3, 4)"
-                     + "\n1. Input a string and store it in a stack"
+                     + "\n1. Input a string and add the characters to a stack"
                      + "\n2. Push characters to the stack"
                      + "\n3. Pop characters from the stack"
                      + "\n4. Reverse a string"
                      + "\n0. Exit to the Main Menu");
                 string input = Console.ReadLine();
-                char nav = input[0];
-                
+                char nav = input[0]; //TODO fix crash on empty
+
                 switch (nav)
                 {
                     case '1':
+                        Console.Write("Input a string: ");
                         inputString = Console.ReadLine();
                         if (inputString != "" || inputString != null)
                         {
@@ -227,15 +231,15 @@ namespace SkalProj_Datastrukturer_Minne
                             {
                                 stack.Push(c);
                             }
-                            Console.Write("Stack contains: ");
+                            Console.Write("The stack now contains: ");
                             foreach (char c in stack)
                             {
-                                Console.Write(c );
+                                Console.Write(c);
                             }
                         }
                         else
-                        { 
-                            Console.WriteLine("Empty string"); 
+                        {
+                            Console.WriteLine("Empty string");
                         }
                         break;
                     case '2':
@@ -251,19 +255,21 @@ namespace SkalProj_Datastrukturer_Minne
                         break;
                     case '3':
                         if (stack.TryPop(out char res))
-                        Console.Write("Stack contains: ");
+                        {
+                            Console.Write($"Removed {res}, Stack now contains: ");
+                            foreach (char c in stack)
+                            {
+                                Console.Write(c);
+                            }
+                        }
                         else
                         {
                             Console.WriteLine("The Stack is empty");
                         }
-                        foreach (char c in stack)
-                        {
-                            Console.Write(c);
-                        }
                         break;
                     case '4':
                         ReverseText();
-                        
+
                         break;
 
                     case '0':
@@ -276,12 +282,15 @@ namespace SkalProj_Datastrukturer_Minne
             }
         }
 
-                
+        /// <summary>
+        /// ReverseText
+        /// </summary>
         static void ReverseText()
         {
             Stack<char> stk = new Stack<char>();
             string str = "";
             string inputString = "";
+            Console.Write("Input a string: ");
             inputString = Console.ReadLine();
             if (inputString != "" || inputString != null)
             {
@@ -289,7 +298,7 @@ namespace SkalProj_Datastrukturer_Minne
                 {
                     stk.Push(c);
                 }
-                Console.Write("Reversed string: ");
+                Console.Write("Reversed text: ");
                 foreach (char c in stk)
                 {
                     str += c;
@@ -301,7 +310,9 @@ namespace SkalProj_Datastrukturer_Minne
                 Console.WriteLine("Empty string");
             }
         }
-
+        /// <summary>
+        /// CheckParanthesis
+        /// </summary>
         static void CheckParanthesis()
         {
             /*
@@ -309,13 +320,77 @@ namespace SkalProj_Datastrukturer_Minne
              * Example of correct: (()), {}, [({})],  List<int> list = new List<int>() { 1, 2, 3, 4 };
              * Example of incorrect: (()]), [), {[()}],  List<int> list = new List<int>() { 1, 2, 3, 4 );
              */
+            string correctString1 = "(()), {}, [({})]"; //Correct
+            string correctString2 = "List<int> list = new List<int>() { 1, 2, 3, 4 }"; //Correct
+            string incorrectString1 = "(()]), [), {[()}]"; //Incorrect
+            string incorrectString2 = "List<int> list = new List<int>() { 1, 2, 3, 4 )"; //Incorrect
+            string emptyString = "";
+            string nullString = null;
+            string inputString = correctString1;
+            //string inputString = null;
+            Stack<char> stk = new Stack<char>();
+            //Console.WriteLine(emptyString == "");
+            //Console.WriteLine(inputString == "");
+            //Console.WriteLine(inputString == null);
+
+            //Console.WriteLine(inputString != "");
+
+            //Console.WriteLine(inputString != null);
+
+
+
+            //if (inputString != "" && inputString != null)
+            if (!String.IsNullOrWhiteSpace(inputString))
+                {
+                bool isWellFormed = true;
+                foreach (char c in inputString!)
+                {
+                    if (c == '(' || c == '{' || c == '[')
+                    {
+                        stk.Push(c);
+                    }
+                    else if (c == ')' || c == '}' || c == ']')
+                    {
+                        if (stk.Count == 0)
+                        {
+                            isWellFormed = false;
+                            break;
+                        }
+                        else if (c == ')' && stk.First() == '(')
+                        {
+                            stk.Pop();
+                        }
+                        else if (c == '}' && stk.First() == '{')
+                        {
+                            stk.Pop();
+                        }
+                        else if (c == ']' && stk.First() == '[')
+                        {
+                            stk.Pop();
+                        }
+                        else if (c != stk.First())
+                        {
+                            isWellFormed = false;
+                            break;
+                        }
+                    }
+                }
+                if (isWellFormed)
+                {
+                    Console.WriteLine("The string is well formed");
+                }
+                else
+                {
+                    Console.WriteLine("The string is not well formed");
+                }
+            }
+            else 
+            {
+                Console.WriteLine("Empty string");
+            }
+
 
         }
-        /*
-         * Loop this method until the user inputs something to exit to main menue.
-         * Create a switch with cases to push or pop items
-         * Make sure to look at the stack after pushing and and poping to see how it behaves
-        */
 
     }
 }
