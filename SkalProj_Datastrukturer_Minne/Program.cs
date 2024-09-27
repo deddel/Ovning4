@@ -159,7 +159,7 @@ namespace SkalProj_Datastrukturer_Minne
             {
                 //Submenu - ExamineQueue
 
-                Console.WriteLine("\nList Menu. Navigate by inputting (1, 0)"
+                Console.WriteLine("\nQueue Menu. Navigate by inputting (1, 2, 0)"
                 + "\n1. Add customers to the queue"
                 + "\n2. Remove item from the queue"
                 + "\n0. Exit to the Main Menu");
@@ -204,23 +204,70 @@ namespace SkalProj_Datastrukturer_Minne
              * Make sure to look at the stack after pushing and and poping to see how it behaves
             */
             Stack<char> stack = new Stack<char>();
+            string inputString ="";
             bool examineStackIsRunning = true;
             while (examineStackIsRunning) 
             {
-                Console.WriteLine("\nList Menu. Navigate by inputting (1, 0)"
-                     + "\n1. Input a string"
-                     + "\n2. Push characters from the string to the stack"
+                Console.WriteLine("\nStack Menu. Navigate by inputting (0, 1, 2, 3, 4)"
+                     + "\n1. Input a string and store it in a stack"
+                     + "\n2. Push characters to the stack"
                      + "\n3. Pop characters from the stack"
-                     + "\n3. Reverse the string"
+                     + "\n4. Reverse a string"
                      + "\n0. Exit to the Main Menu");
                 string input = Console.ReadLine();
                 char nav = input[0];
+                
                 switch (nav)
                 {
                     case '1':
-                        string inputString = Console.ReadLine();
+                        inputString = Console.ReadLine();
+                        if (inputString != "" || inputString != null)
+                        {
+                            foreach (char c in inputString!)
+                            {
+                                stack.Push(c);
+                            }
+                            Console.Write("Stack contains: ");
+                            foreach (char c in stack)
+                            {
+                                Console.Write(c );
+                            }
+                        }
+                        else
+                        { 
+                            Console.WriteLine("Empty string"); 
+                        }
                         break;
                     case '2':
+                        Console.Write("Input a character: ");
+                        string inputStr = Console.ReadLine();
+                        char ch = inputStr[0];
+                        stack.Push(ch);
+                        Console.Write("Stack contains: ");
+                        foreach (char c in stack)
+                        {
+                            Console.Write(c);
+                        }
+                        break;
+                    case '3':
+                        if (stack.TryPop(out char res))
+                        Console.Write("Stack contains: ");
+                        else
+                        {
+                            Console.WriteLine("The Stack is empty");
+                        }
+                        foreach (char c in stack)
+                        {
+                            Console.Write(c);
+                        }
+                        break;
+                    case '4':
+                        ReverseText();
+                        
+                        break;
+
+                    case '0':
+                        examineStackIsRunning = false;
                         break;
 
                 }
@@ -230,9 +277,29 @@ namespace SkalProj_Datastrukturer_Minne
         }
 
                 
-        static string ReverseText()
+        static void ReverseText()
         {
-            return "";
+            Stack<char> stk = new Stack<char>();
+            string str = "";
+            string inputString = "";
+            inputString = Console.ReadLine();
+            if (inputString != "" || inputString != null)
+            {
+                foreach (char c in inputString!)
+                {
+                    stk.Push(c);
+                }
+                Console.Write("Reversed string: ");
+                foreach (char c in stk)
+                {
+                    str += c;
+                }
+                Console.WriteLine(str);
+            }
+            else
+            {
+                Console.WriteLine("Empty string");
+            }
         }
 
         static void CheckParanthesis()
