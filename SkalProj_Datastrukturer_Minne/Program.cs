@@ -332,14 +332,10 @@ namespace SkalProj_Datastrukturer_Minne
             //Console.WriteLine(emptyString == "");
             //Console.WriteLine(inputString == "");
             //Console.WriteLine(inputString == null);
-
             //Console.WriteLine(inputString != "");
-
             //Console.WriteLine(inputString != null);
-
-
-
             //if (inputString != "" && inputString != null)
+            //TODO take input from user
             if (!String.IsNullOrWhiteSpace(inputString))
                 {
                 bool isWellFormed = true;
