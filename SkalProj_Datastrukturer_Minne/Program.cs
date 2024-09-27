@@ -74,9 +74,9 @@ namespace SkalProj_Datastrukturer_Minne
              * As a default case, tell them to use only + or -
              * Below you can see some inspirational code to begin working.
             */
-            
+
             bool examineListIsRunning = true;
-            
+
             while (examineListIsRunning)
             {
                 //Submenu - ExamineList
@@ -88,7 +88,7 @@ namespace SkalProj_Datastrukturer_Minne
                 char nav = input[0];
                 bool addingItems = true;
 
-                switch (nav) 
+                switch (nav)
                 {
                     case '0':
                         examineListIsRunning = false;
@@ -132,14 +132,14 @@ namespace SkalProj_Datastrukturer_Minne
                         //    Console.WriteLine(item);
                         //}
                         break;
-                    
+
                     default:
                         Console.WriteLine("Please enter some valid input (0, 1, 2)");
                         break;
                 }
 
             }
-            
+
         }
 
         /// <summary>
@@ -155,7 +155,7 @@ namespace SkalProj_Datastrukturer_Minne
             Queue<string> queue = new Queue<string>();
             bool examineQueueIsRunning = true;
 
-            while (examineQueueIsRunning) 
+            while (examineQueueIsRunning)
             {
                 //Submenu - ExamineQueue
 
@@ -184,7 +184,7 @@ namespace SkalProj_Datastrukturer_Minne
                     case '0':
                         examineQueueIsRunning = false;
                         break;
-                    default :
+                    default:
                         Console.WriteLine("Please enter a valid input (0,1,2)");
                         break;
 
@@ -203,6 +203,36 @@ namespace SkalProj_Datastrukturer_Minne
              * Create a switch with cases to push or pop items
              * Make sure to look at the stack after pushing and and poping to see how it behaves
             */
+            Stack<char> stack = new Stack<char>();
+            bool examineStackIsRunning = true;
+            while (examineStackIsRunning) 
+            {
+                Console.WriteLine("\nList Menu. Navigate by inputting (1, 0)"
+                     + "\n1. Input a string"
+                     + "\n2. Push characters from the string to the stack"
+                     + "\n3. Pop characters from the stack"
+                     + "\n3. Reverse the string"
+                     + "\n0. Exit to the Main Menu");
+                string input = Console.ReadLine();
+                char nav = input[0];
+                switch (nav)
+                {
+                    case '1':
+                        string inputString = Console.ReadLine();
+                        break;
+                    case '2':
+                        break;
+
+                }
+
+
+            }
+        }
+
+                
+        static string ReverseText()
+        {
+            return "";
         }
 
         static void CheckParanthesis()
@@ -214,6 +244,11 @@ namespace SkalProj_Datastrukturer_Minne
              */
 
         }
+        /*
+         * Loop this method until the user inputs something to exit to main menue.
+         * Create a switch with cases to push or pop items
+         * Make sure to look at the stack after pushing and and poping to see how it behaves
+        */
 
     }
 }
