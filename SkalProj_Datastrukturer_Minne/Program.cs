@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
 
 namespace SkalProj_Datastrukturer_Minne
 {
@@ -80,65 +81,79 @@ namespace SkalProj_Datastrukturer_Minne
 
             while (examineListIsRunning)
             {
+                bool addingItems = true;
                 //Submenu - ExamineList
                 Console.WriteLine("\nList Menu. Navigate by inputting (1, 0)"
                 + "\n1. Add or remove from the list"
                 + "\n2. Show list stats"
                 + "\n0. Exit to the Main Menu");
-                string input = Console.ReadLine();
-                char nav = input[0];
-                bool addingItems = true;
-
-                switch (nav)
+                try
                 {
-                    case '0':
-                        examineListIsRunning = false;
-                        break;
-                    case '1':
-                        Console.WriteLine("Start your input with + or - followed by the list item to be added or removed");
-                        Console.WriteLine("Start your input with 0 to exit to the List nenu");
-                        while (addingItems)
-                        {
-                            string inputString = Console.ReadLine();
-                            
-                            char addOrRemove = inputString[0];//TODO: fix crash on empty input
-                            //string addOrRemoveString = inputString.Substring(1);
-                            if (addOrRemove == '+')
+                    string input = Console.ReadLine();
+                    char nav = input[0]; 
+                    switch (nav)
+                    {
+                        case '0':
+                            examineListIsRunning = false;
+                            break;
+                        case '1':
+                            Console.WriteLine("Start your input with + or - followed by the list item to be added or removed");
+                            Console.WriteLine("Start your input with 0 to exit to the List nenu");
+                            while (addingItems)
                             {
-                                theList.Add(inputString.Substring(1));
-                                Console.WriteLine($"Count: {theList.Count} \tCapacity: {theList.Capacity}");
+                                do
+                                {
+                                    try
+                                    {
+                                        string inputString = Console.ReadLine();
+                                        char addOrRemove = inputString[0]; 
+                                        if (addOrRemove == '+') 
+                                        {
+                                            theList.Add(inputString.Substring(1)); //TODO maybe not allow empty after + - and 0
+                                            Console.WriteLine($"Count: {theList.Count} \tCapacity: {theList.Capacity}");
+                                        }
+                                        else if (addOrRemove == '-')
+                                        {
+                                            theList.Remove((inputString.Substring(1)));
+                                            Console.WriteLine($"Count: {theList.Count} \tCapacity: {theList.Capacity}");
+                                        }
+                                        else if (addOrRemove == '0')
+                                        {
+                                            addingItems = false;
+                                        }
+                                        else
+                                        {
+                                            Console.WriteLine("Please enter some valid input (+Item, -Item or 0");
+                                        }
+                                    }
+                                    catch (IndexOutOfRangeException)
+                                    {
+                                        Console.WriteLine("Please enter some input!");
+                                    }                           
+                                }
+                                while (addingItems);
                             }
-                            else if (addOrRemove == '-')
-                            {
-                                theList.Remove((inputString.Substring(1)));
-                                Console.WriteLine($"Count: {theList.Count} \tCapacity: {theList.Capacity}");
-                            }
-                            else if (addOrRemove == '0')
-                            {
-                                addingItems = false;
-                            }
-                            
-                            else
-                            {
-                                Console.WriteLine("Please enter some valid input (+Item, -Item or 0");
-                            }
-                        }
-                        break;
-                    case '2':
-                        Console.WriteLine($"Count: {theList.Count} \tCapacity: {theList.Capacity}");
-                        Console.ForegroundColor = ConsoleColor.Yellow;
-                        Console.WriteLine($"Items in the list: {string.Join(",", theList)}");
-                        Console.ResetColor();
-                        Console.WriteLine();
-                        //foreach (var item in theList)
-                        //{
-                        //    Console.WriteLine(item);
-                        //}
-                        break;
+                            break;
+                        case '2':
+                            Console.WriteLine($"Count: {theList.Count} \tCapacity: {theList.Capacity}");
+                            Console.ForegroundColor = ConsoleColor.Yellow;
+                            Console.WriteLine($"Items in the list: {string.Join(",", theList)}");
+                            Console.ResetColor();
+                            Console.WriteLine();
+                            //foreach (var item in theList)
+                            //{
+                            //    Console.WriteLine(item);
+                            //}
+                            break;
 
-                    default:
-                        Console.WriteLine("Please enter some valid input (0, 1, 2)");
-                        break;
+                        default:
+                            Console.WriteLine("Please enter some valid input (0, 1, 2)");
+                            break;
+                    }
+                }
+                catch (IndexOutOfRangeException)
+                {
+                    Console.WriteLine("Please enter some input!");
                 }
 
             }
@@ -166,32 +181,54 @@ namespace SkalProj_Datastrukturer_Minne
                 + "\n1. Add customers to the queue"
                 + "\n2. Remove item from the queue"
                 + "\n0. Exit to the Main Menu");
-                string input = Console.ReadLine();
-                char nav = input[0]; //TODO fix crash on empty
-                switch (nav)
+
+                try
                 {
-                    case '1':
-                        Console.Write("Input customer to enqueue: ");
-                        string inputString = Console.ReadLine();
-                        queue.Enqueue(inputString);
-                        Console.ForegroundColor = ConsoleColor.Yellow;
-                        Console.WriteLine($"Customers in the queue: {string.Join(",", queue)}");
-                        Console.ResetColor();
-                        break;
-                    case '2':
-                        queue.Dequeue();
-                        Console.ForegroundColor = ConsoleColor.Yellow;
-                        Console.WriteLine($"Customers in the queue: {string.Join(",", queue)}");
-                        Console.ResetColor();
-                        break;
-                    case '0':
-                        examineQueueIsRunning = false;
-                        break;
-                    default:
-                        Console.WriteLine("Please enter a valid input (0,1,2)");
-                        break;
+                    string input = Console.ReadLine();
+                    char nav = input[0]; 
+                    switch (nav)
+                    {
+                        case '1':
+                            Console.Write("Input customer to enqueue: ");
+                            string inputString = Console.ReadLine();
+                            queue.Enqueue(inputString);
+                            
+                            Console.ForegroundColor = ConsoleColor.Yellow;
+                            Console.WriteLine($"Customers in the queue: {string.Join(",", queue)}");
+                            Console.ResetColor();
+                            break;
+                        case '2':
+                            if (queue.TryDequeue(out string res))
+                            {
+
+                                Console.ForegroundColor = ConsoleColor.Yellow;
+                                if (queue.Count > 0)
+                                    Console.WriteLine($"{res} was removed from the queue. It now contains:" +
+                                    $" {string.Join(",", queue)}"); 
+                                else
+                                    Console.WriteLine($"{res} was removed from the queue. It is now empty"); 
 
 
+                                Console.ResetColor();
+                            }
+                            else
+                            {
+                                Console.WriteLine("The que is empty");
+                            }
+                            break;
+
+                            
+                        case '0':
+                            examineQueueIsRunning = false;
+                            break;
+                        default:
+                            Console.WriteLine("Please enter a valid input (0,1,2)");
+                            break;
+                    }
+                }
+                catch (IndexOutOfRangeException)
+                {
+                    Console.WriteLine("Please enter some input");
                 }
             }
         }
@@ -209,6 +246,7 @@ namespace SkalProj_Datastrukturer_Minne
             Stack<char> stack = new Stack<char>();
             string inputString = "";
             bool examineStackIsRunning = true;
+            
             while (examineStackIsRunning)
             {
                 Console.WriteLine("\nStack Menu. Navigate by inputting (0, 1, 2, 3, 4)"
@@ -217,67 +255,77 @@ namespace SkalProj_Datastrukturer_Minne
                      + "\n3. Pop characters from the stack"
                      + "\n4. Reverse a string"
                      + "\n0. Exit to the Main Menu");
-                string input = Console.ReadLine();
-                char nav = input[0]; //TODO fix crash on empty
-
-                switch (nav)
+                try 
                 {
-                    case '1':
-                        Console.Write("Input a string: ");
-                        inputString = Console.ReadLine();
-                        if (inputString != "" || inputString != null)
-                        {
-                            foreach (char c in inputString!)
+                
+                    string input = Console.ReadLine();
+                    char nav = input[0]; 
+
+                    switch (nav)
+                    {
+                        case '1':
+                            Console.Write("Input a string: ");
+                            inputString = Console.ReadLine();
+                            if (inputString != "" || inputString != null)
                             {
-                                stack.Push(c);
+                                foreach (char c in inputString!)
+                                {
+                                    stack.Push(c);
+                                }
+                                Console.Write("The stack now contains: ");
+                                foreach (char c in stack)
+                                {
+                                    Console.Write(c);
+                                }
                             }
-                            Console.Write("The stack now contains: ");
+                            else
+                            {
+                                Console.WriteLine("Empty string");
+                            }
+                            break;
+                        case '2':
+                            Console.Write("Input a character: ");
+                            
+                            string inputStr = Console.ReadLine();
+                            char ch = inputStr[0]; 
+                            stack.Push(ch);
+                            Console.Write("Stack contains: ");
                             foreach (char c in stack)
                             {
                                 Console.Write(c);
                             }
-                        }
-                        else
-                        {
-                            Console.WriteLine("Empty string");
-                        }
-                        break;
-                    case '2':
-                        Console.Write("Input a character: ");
-                        string inputStr = Console.ReadLine();
-                        char ch = inputStr[0];
-                        stack.Push(ch);
-                        Console.Write("Stack contains: ");
-                        foreach (char c in stack)
-                        {
-                            Console.Write(c);
-                        }
-                        break;
-                    case '3':
-                        if (stack.TryPop(out char res))
-                        {
-                            Console.Write($"Removed {res}, Stack now contains: ");
-                            foreach (char c in stack)
+                            break;
+
+                        case '3':
+                            if (stack.TryPop(out char res))
                             {
-                                Console.Write(c);
+                                Console.Write($"Removed {res}, Stack now contains: ");
+                                foreach (char c in stack)
+                                {
+                                    Console.Write(c);
+                                }
                             }
-                        }
-                        else
-                        {
-                            Console.WriteLine("The Stack is empty");
-                        }
-                        break;
-                    case '4':
-                        ReverseText();
+                            else
+                            {
+                                Console.WriteLine("The Stack is empty");
+                            }
+                            break;
+                        case '4':
+                            ReverseText();
 
-                        break;
+                            break;
 
-                    case '0':
-                        examineStackIsRunning = false;
-                        break;
+                        case '0':
+                            examineStackIsRunning = false;
+                            break;
 
+                    }
                 }
-
+                catch (IndexOutOfRangeException) 
+                {
+                    Console.WriteLine("Please enter some input");
+                }
+                
 
             }
         }
@@ -320,22 +368,17 @@ namespace SkalProj_Datastrukturer_Minne
              * Example of correct: (()), {}, [({})],  List<int> list = new List<int>() { 1, 2, 3, 4 };
              * Example of incorrect: (()]), [), {[()}],  List<int> list = new List<int>() { 1, 2, 3, 4 );
              */
-            string correctString1 = "(()), {}, [({})]"; //Correct
-            string correctString2 = "List<int> list = new List<int>() { 1, 2, 3, 4 }"; //Correct
-            string incorrectString1 = "(()]), [), {[()}]"; //Incorrect
-            string incorrectString2 = "List<int> list = new List<int>() { 1, 2, 3, 4 )"; //Incorrect
-            string emptyString = "";
-            string nullString = null;
-            string inputString = correctString1;
-            //string inputString = null;
+            //string inputString = "(()), {}, [({})]"; //Correct
+            //string inputString = "List<int> list = new List<int>() { 1, 2, 3, 4 }"; //Correct
+            //string inputString = "(()]), [), {[()}]"; //Incorrect
+            //string inputString = "List<int> list = new List<int>() { 1, 2, 3, 4 )"; //Incorrect
+            //string inputString = ""; //empty
+            //string inputString = null; //null
+            //TODO add ability to take userinput
+
+            Console.Write("Add a string to check if it is well formed: ");
+            string inputString = Console.ReadLine();
             Stack<char> stk = new Stack<char>();
-            //Console.WriteLine(emptyString == "");
-            //Console.WriteLine(inputString == "");
-            //Console.WriteLine(inputString == null);
-            //Console.WriteLine(inputString != "");
-            //Console.WriteLine(inputString != null);
-            //if (inputString != "" && inputString != null)
-            //TODO take input from user
             if (!String.IsNullOrWhiteSpace(inputString))
                 {
                 bool isWellFormed = true;
